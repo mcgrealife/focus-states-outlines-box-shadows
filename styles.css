@@ -10,11 +10,6 @@ body {
   color: white
 }
 
-
-.goal {
-  box-shadow: 0px 0px 0px 2px yellow, 0px 0px 0px 4px red;
-}
-
 button {
   padding: 12px;
   height: fit-content;
@@ -56,8 +51,8 @@ button:nth-of-type(5):focus-within {
   box-shadow: 0px 0px 0px 2px yellow, 0px 0px 0px 4px red;
 }
 
-button:nth-of-type(4):focus,
-button:nth-of-type(4):focus-within {
+button:nth-of-type(6):focus,
+button:nth-of-type(6):focus-within {
   outline: 2px solid yellow;
   box-shadow: 0px 0px 0px 4px red, 0px 0px 0px 2px yellow;
 }
