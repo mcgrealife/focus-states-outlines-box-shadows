@@ -1,34 +1,63 @@
 body {
-  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  gap: 10rem;
-  background-color: darkgray;
+  box-sizing: border-box;
+  background-color: black;
+  font-family: 'Open Sans', sans-serif;
+  font-family: 'Roboto Mono', monospace;
+  margin: 0 10vw;
+  gap:10px;
+  color: white
 }
 
-body > div {
-  background: #2c0b47;
-  width: 64px;
-  height: 64px;
-  border-radius: 1000px;
+
+.goal {
+  box-shadow: 0px 0px 0px 2px yellow, 0px 0px 0px 4px red;
 }
 
-.one:focus,
-.one:focus-visible {
-  /* expect "double border: inner ring white; outer red" */
-  box-shadow: 0px 0px 0px 4px red, 0px 0px 0px 2px white;
-  /* actual: inner: default browser outline  blue, midle: white, outer: red  */
+button {
+  padding: 12px;
+  height: fit-content;
+  text-align: left;
+  border-radius: 8px;
+  border: 0;
+  background-color: rgb(40, 40, 40);
+  color: white;
+  
 }
 
-.two:focus,
-.two:focus-visible {
+button:nth-of-type(1):focus,
+button:nth-of-type(1):focus-within {
+  /* default */
+}
+
+button:nth-of-type(2):focus,
+button:nth-of-type(2):focus-within {
+  /* expect => inner ring: red, outer ring: yellow */
+  box-shadow: 0px 0px 0px 4px red, 0px 0px 0px 2px yellow;
+}
+
+button:nth-of-type(3):focus,
+button:nth-of-type(3):focus-within {
+  /* try  remove outline (though maybe not accessible best practice)*/
   outline: none;
-  /* expect "double border: inner ring white; outer blue" */
-  box-shadow: 0px 0px 0px 4px red, 0px 0px;
-  /* actual: only blue border shown */
-}
-.three:focus {
-  /* outline: none; */
+  box-shadow: 0px 0px 0px 4px red, 0px 0px 0px 2px yellow;
 }
 
-/* also other  */
+button:nth-of-type(4):focus,
+button:nth-of-type(4):focus-within {
+  outline: solid yellow;
+  box-shadow: 0px 0px 0px 4px red, 0px 0px 0px 2px yellow;
+}
+
+button:nth-of-type(5):focus,
+button:nth-of-type(5):focus-within {
+  outline: none;
+  box-shadow: 0px 0px 0px 2px yellow, 0px 0px 0px 4px red;
+}
+
+button:nth-of-type(4):focus,
+button:nth-of-type(4):focus-within {
+  outline: 2px solid yellow;
+  box-shadow: 0px 0px 0px 4px red, 0px 0px 0px 2px yellow;
+}

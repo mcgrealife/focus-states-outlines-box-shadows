@@ -1,18 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>focus-within outline vs double-shadow</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <p>
-      use dev tools to force `focus` state on each circle div
-      <a href="https://stackoverflow.com/a/6778547">example</a>
-    </p>
-    <div class="one"></div>
-    <div class="two"></div>
-    <div class="three"></div>
-  </body>
-</html>
+
+<head>
+  <title>focus-within outline vs double-shadow</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@1,600&family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+    rel="stylesheet">
+</head>
+
+
+<body>
+  <h4>
+    Testing :focus and :focus-within.<br />
+    Enhancing default focus indicator using <i>double box-shadow</i> technique.<br />
+  </h4>
+  <!-- <button class="goal" tabindex="-1">
+    Goal: focus indicator should look like 2 borders.
+    <br/>Inner: <span style="color: yellow;">yellow</span>; outer: <span style="color: red">red</span>
+  </button> -->
+
+  <h4>Click here to capture focus above buttons.<br/>
+    <br/>then `tab` key to <i>:focus-within</i>
+  </h4>
+
+  <h4>Scenario: Figma CSS panel shows
+    <br/><code style="color: rgb(99, 99, 99);">box-shadow: 0px 0px 0px 4px <span style="color: red;">red</span>, 0px 0px 0px 2px <span style="color: yellow;">yellow</span>;</code>
+    <br/>Notice red is first, and yellow is second
+    <br/>This should appear as two borders, where the
+    <br/><i>"inner border is yellow" and the "outer border is red"</i>
+
+  </h4>
+  <button>1.
+    <br /> None styles applied. This is the default browser 'outline' css property.
+    <br /> Expected => unknown
+    <br /> Actual => Inner: <span style="color: rgb(39,93,197);">blue</span>; outer: <span
+      style="color: white; font-weight: 900;">white</span></button>
+
+  <button>2.
+    <br />Goal: focus indicator should look like 2 borders
+    <br />With the inner border yellow, and the outer border red.
+    <br />
+    <br />In Figma CSS panel, this would be shown as
+    <br /><code>box-shadow: 0px 0px 0px 2px <span style="color: red;">red</span>, 0px 0px 0px 4px <span style="color: yellow;">yellow</span>;</code>
+    <br /><i>(notice red is first in Figma css)</i>
+    <br />
+    <br />Goal => Inner: <span style="color: yellow;">yellow</span>; outer: <span style="color: red">red</span>
+    <br />Actual => Inner: <span style="color: rgb(39,93,197);">blue</span>; middle: <span
+      style="color: white; font-weight: 900;">white</span>; outer: <span style="color: red">red</span>
+    <br />
+    <br /> Notes:
+    <br /> What is happening here?
+    <br /> Maybe the browser default <code>focus-within</code> indicator is covering our inner yellow?
+    <br /> Let's try setting removing outline interference in the next button below
+  </button>
+
+  <button>3.
+    <br />This has the same box-shadow style as above –– but with 
+    <br /><code>outline: none;</code>
+    <br />
+    <br />Goal => Inner: <span style="color: yellow;">yellow</span>; outer: <span style="color: red">red</span>
+    <br />Actual => Inner: <span style="color: red">red</span>; middle: <span style="color: red">red</span>; outer: <span style="color: red">red</span>;
+    <br />
+    <br /> Notes:
+    <br /> Also unexpected!
+    <br /> We have successfully removed the default blue and white focus indicator styles
+    <br /> But now it just looks like one huge red border. Where is the yellow?!
+  </button>
+
+  <button>4.
+    <br />Maybe we could style the default outline as yellow and red?
+    <br /><code>outline: solid yellow;</code>
+    <br />
+    <br />Goal => Inner: <span style="color: yellow;">yellow</span>; outer: <span style="color: red">red</span>
+    <br />Actual => Inner: <span style="color: yellow;">yellow</span>; outer: <span style="color: red">red</span> 
+    <br />
+    <br /> Notes:
+    <br /> This seems to work!!
+    <br /> But is is scalable? Can it handle all our variations?
+    <br /> Is there still a giant red border underneath?
+    <br /> I'm not sure.
+    <br /> It does intuitively seem like a better practice to style the focus property, than to remove the focus style and "fake it" with a double box-shadow
+    <br /> The same is shown on the regular <code>:focus</code> pseudo-class too, which is good (try simply clicking the button)
+  </button>
+  
+  <button>5.
+    <br />Finally, I discovered that we CAN achieve the Figma double box-shadow affect
+    <br />by strangely, <b>reversing the order of the individual shadows</b>
+    <br />
+    <br />If figma CSS panel shows 
+    <br/><code>box-shadow: red, yellow;</code>
+    <br />
+    <br />Our actual CSS should use 
+    <br/><code>box-shadow: yellow, red;</i>
+    <br/><code>outline: none;</i>
+    <br />
+    <br />Goal => Inner: <span style="color: yellow;">yellow</span>; outer: <span style="color: red">red</span>
+    <br />Goal => Inner: <span style="color: yellow;">yellow</span>; outer: <span style="color: red">red</span>
+    <br />
+    <br /> Notes:
+    <br /> This seems to work!
+    <br /> but is setting outline to none bad practice?
+    <br /> The same is shown on the regular <code>:focus</code> pseudo-class too, which is good (try simply clicking the button)
+    <br /> 
+  </button>
+
+  <button>6.
+    <br /> One sublte difference between cases 4 and 5 is: 
+    <br/> when using the reverse double-shadow technique (case 5)
+    <br />the inner shadow (yellow) is equal thickness to the outer (red)
+    <br />
+    <br/> Whereas, in case 4, the inner yellow is less thick than the outer red
+    <br />
+    <br />However! The outline property accepts a px thickness value, like a border
+    <br />Will this work?
+    <br/><code>outline: <span style="font-weight: 900;">2px</span> solid yellow;</code>
+    <br/><code>box-shadow: 0px 0px 0px 4px red, 0px 0px 0px 2px yellow;</code>
+    <br />
+    <br />Our actual CSS should use 
+    <br/><code>box-shadow: yellow, red;</i>
+    <br/><code>outline: none;</i>
+    <br />
+    <br />Goal => Inner: <span style="color: yellow;">yellow</span>; outer: <span style="color: red">red</span>
+    <br />Actual => Inner: <span style="color: red">red</span>; middle: <span style="color: red">red</span>; outer: <span style="color: red">red</span>;
+    <br />
+    <br /> Notes:
+    <br /> It works!!
+    <br /> So we can achieve all three goals: inner and outer colors, thickness of inner and outer "borders", AND without setting outline to none (which might be bad practice)
+  </button>
+
+  <button>6.<br /></button>
+</body>
+
+</html> 
